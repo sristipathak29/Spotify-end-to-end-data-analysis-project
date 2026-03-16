@@ -1,0 +1,67 @@
+~Basic to advance sql quries
+
+~Analyzing spotify records through sql queries
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- Count total songs in the datasets
+select  count(*) from spotify_records;
+
+-- Find the top 10 most streamed songs
+select track_name, streams from spotify_records order by streams desc limit 10;
+
+-- Find the top 5 artists with most songs
+select artist_name, count(*) as total_songs from spotify_records group by artist_name order by total_songs desc limit 5;
+
+-- Find average popularity of songs
+select avg(popularity) as avg_popularity from spotify_records;
+
+-- Find the longest song
+select track_name, duration_ms from spotify_records order by duration_ms desc limit 1;
+
+-- Count songs released each year
+select release_year, count(*) AS song_count FROM spotify_records GROUP BY release_year ORDER BY release_year DESC;
+
+-- Find songs with popularity > 90
+select track_name, popularity from spotify_records where popularity>90;
+
+-- Find songs longer than 4 minutes
+select track_name, duration_ms from spotify_records where duration_ms > 240000;
+
+-- Find the average tempo
+select avg(tempo) from spotify_records;
+
+-- Find the earliest released song
+select track_name, release_year from spotify_records order by release_year asc limit 1;
+
+-- Top 10 artists by total streams
+select artist_name , sum(streams) from spotify_records group by artist_name order by sum(streams) desc limit 10;
+
+-- Average popularity per artist
+select artist_name, avg(popularity) from spotify_records group by artist_name;
+
+-- Songs with energy > 0.9
+select track_name, energy from spotify_records where energy>0.9;
+
+-- Songs with danceability > 0.8
+select track_name , danceability from spotify_records where danceability>0.8;
+
+-- Average song duration per year
+select release_year,avg(duration_ms) from spotify_records group by release_year;
+
+-- Artists with more than 200 songs
+select artist_name, COUNT(*) as  total_songs from spotify_records group by artist_name having count(*) > 200;
+
+-- Songs where energy > danceability
+select track_name, energy, danceability from spotify_records where energy > danceability;
+
+-- Average streams per year
+select release_year, avg(streams) from spotify_records group by release_year;
+
+-- Artist With Highest Average Popularity
+select artist_name, avg(popularity) as  avg_popularity from spotify_records group by artist_name order by avg_popularity desc limit 1;
+
+-- Songs With Tempo Above Average
+select track_name, artist_name, tempo from spotify_records where tempo > (select avg(tempo)from spotify_records);
+
+-- Songs Longer Than Average Duration
+select track_name, artist_name, duration_ms from spotify_records where duration_ms > (select avg(duration_ms) from spotify_records);
